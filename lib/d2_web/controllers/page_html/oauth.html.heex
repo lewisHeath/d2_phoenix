@@ -1,0 +1,42 @@
+<Layouts.app flash={@flash}>
+<h1>OAuth</h1>
+<p>This is the OAuth page.</p>
+<%!-- Display the query params if they exist --%>
+<%= if @query_params do %>
+  <h2>Query Parameters:</h2>
+  <ul>
+    <%= for {key, value} <- @query_params do %>
+      <li><strong><%= key %>:</strong> <%= value %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No query parameters found.</p>
+<% end %>
+
+<%!-- render the access tokens stuff --%>
+<%= if @access_token do %>
+  <h2>Access Token:</h2>
+  <p><%= @access_token %></p>
+<% end %>
+
+<%= if @refresh_token do %>
+  <h2>Refresh Token:</h2>
+  <p><%= @refresh_token %></p>
+<% end %>
+
+<%= if @membership_id do %>
+  <h2>Membership ID:</h2>
+  <p><%= @membership_id %></p>
+<% end %>
+
+<%= if @token_type do %>
+  <h2>Token Details:</h2>
+  <p><%= @token_type %></p>
+<% end %>
+
+<%= if @expires_in do %>
+  <h2>Token Details:</h2>
+  <p><%= @expires_in %></p>
+<% end %>
+
+</Layouts.app>
