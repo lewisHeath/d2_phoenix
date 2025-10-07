@@ -5,6 +5,15 @@ pipeline {
     stages {
         stage('Build') {
             steps {
+                sh 'echo "Checking environment..."'
+                sh 'id'
+                sh 'env | sort'
+                sh 'ls -ld /'
+                sh 'echo WORKSPACE=$WORKSPACE'
+                sh 'echo HOME=$HOME'
+                sh 'echo MIX_HOME=$MIX_HOME'
+                sh 'whoami'
+                sh 'pwd'
                 sh 'echo "Building..."'
                 sh 'mix local.hex --force'
                 sh 'mix local.rebar --force'
