@@ -1,6 +1,8 @@
 pipeline {
      agent {
-        docker { image 'elixir:latest' }
+        dockerfile {
+
+         }
     }
     stages {
         stage('Build') {
