@@ -1,42 +1,32 @@
-<Layouts.app flash={@flash}>
-<h1>OAuth</h1>
-<p>This is the OAuth page.</p>
-<%!-- Display the query params if they exist --%>
-<%= if @query_params do %>
-  <h2>Query Parameters:</h2>
-  <ul>
-    <%= for {key, value} <- @query_params do %>
-      <li><strong><%= key %>:</strong> <%= value %></li>
-    <% end %>
-  </ul>
-<% else %>
-  <p>No query parameters found.</p>
-<% end %>
+<div class="flex flex-col h-screen font-mono">
+  <header class="navbar px-4 sm:px-6 lg:px-8">
+    <div class="flex-1">
+      <a href="/" class="flex-1 flex w-fit items-center gap-2">
+        <img src={~p"/images/daisy.svg"} width="36" />
+        <span class="text-sm font-semibold">d2 v{Application.spec(:d2, :vsn)}</span>
+      </a>
+    </div>
+    <div class="flex-none">
+      <ul class="flex flex-column px-1 space-x-4 items-center">
+        <li>{@bungie_user["uniqueName"]}</li>
+        <li>
+          <div class="avatar">
+            <div class="w-10 rounded">
+              <img src={"http://bungie.net#{@bungie_user["profilePicturePath"]}"} />
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </header>
 
-<%!-- render the access tokens stuff --%>
-<%= if @access_token do %>
-  <h2>Access Token:</h2>
-  <p><%= @access_token %></p>
-<% end %>
-
-<%= if @refresh_token do %>
-  <h2>Refresh Token:</h2>
-  <p><%= @refresh_token %></p>
-<% end %>
-
-<%= if @membership_id do %>
-  <h2>Membership ID:</h2>
-  <p><%= @membership_id %></p>
-<% end %>
-
-<%= if @token_type do %>
-  <h2>Token Details:</h2>
-  <p><%= @token_type %></p>
-<% end %>
-
-<%= if @expires_in do %>
-  <h2>Token Details:</h2>
-  <p><%= @expires_in %></p>
-<% end %>
-
-</Layouts.app>
+  <div class="m-auto card card-dash bg-base-200 ">
+    <div class="card-body">
+      <h2 class="card-title">We need your permission!</h2>
+      <p>Allow D2 to view and modify your <b>Destiny characters</b>, <b>vault</b>, and <b>progression</b>.</p>
+      <a href="https://www.bungie.net/en/oauth/authorize?client_id=50681&response_type=code&state=hello_world">
+        <button class="btn btn-primary btn-block mt-2">Authorize with Bungie.net</button>
+      </a>
+    </div>
+  </div>
+</div>

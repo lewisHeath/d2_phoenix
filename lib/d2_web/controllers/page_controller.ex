@@ -43,14 +43,24 @@ defmodule D2Web.PageController do
         Logger.info("Membership ID: #{membership_id}")
         Logger.info("Token type: #{token_type}")
         Logger.info("Expires in: #{expires_in}")
-        # Render the oauth template with the tokens
-        conn
-        |> assign(:access_token, access_token)
-        |> assign(:refresh_token, refresh_token)
-        |> assign(:membership_id, membership_id)
-        |> assign(:token_type, token_type)
-        |> assign(:expires_in, expires_in)
-        |> render(:oauth)
+        # Start the access token server but don't register the name globally
+        {:ok, _pid} = DynamicSupervisor.start_child(D2.DynamicSupervisor, {D2.AccessTokenServer, %{
+          access_token: access_token,
+          refresh_token: refresh_token,
+          membership_id: membership_id,
+          token_type: token_type,
+          expires_in: expires_in
+        }})
+
+        # https://www.bungie.net/Platform/User/GetMembershipsForCurrentUser/
+        # get the users profile picture path
+        {:ok, %HTTPoison.Response{status_code: 200, body: profile_body}} = HTTPoison.get("https://www.bungie.net/Platform/User/GetMembershipsForCurrentUser/",
+          [{"Authorization", "#{token_type} #{access_token}"}, {"X-API-Key", "752a37c3e62042de897346cf076d0904"}]
+        )
+        profile_body = Jason.decode!(profile_body)
+        bungie_user = profile_body["Response"]["bungieNetUser"]
+        conn = conn |> assign(:bungie_user, bungie_user)
+        conn |> render(:oauth)
 
       {:ok, %HTTPoison.Response{status_code: status_code, body: body}} ->
         Logger.error("Failed to get tokens from Bungie. Status code: #{status_code}, Body: #{body}")

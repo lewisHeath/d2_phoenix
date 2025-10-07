@@ -1,8 +1,27 @@
-<Layouts.app flash={@flash}>
-<h1>Main Page</h1>
-<p>Welcome to the main page!</p>
-<%!-- Button that takes you to https://www.bungie.net/en/oauth/authorize?client_id=50681&response_type=code&state=hello_world --%>
-<a href="https://www.bungie.net/en/oauth/authorize?client_id=50681&response_type=code&state=hello_world">
-  <button class="btn btn-primary">Go to OAuth</button>
-</a>
-</Layouts.app>
+<div class="flex flex-col h-screen font-mono">
+  <header class="navbar px-4 sm:px-6 lg:px-8">
+    <div class="flex-1">
+      <a href="/" class="flex-1 flex w-fit items-center gap-2">
+        <img src={~p"/images/daisy.svg"} width="36" />
+        <span class="text-sm font-semibold">d2 v{Application.spec(:d2, :vsn)}</span>
+      </a>
+    </div>
+    <div class="flex-none">
+      <ul class="flex flex-column px-1 space-x-4 items-center">
+        <a href="https://www.bungie.net/en/oauth/authorize?client_id=50681&response_type=code&state=hello_world">
+          <button class="btn btn-primary">Sign In</button>
+        </a>
+      </ul>
+    </div>
+  </header>
+
+  <div class="m-auto card card-dash bg-base-200 ">
+    <div class="card-body">
+      <h2 class="card-title">We need your permission!</h2>
+      <p>Allow D2 to view and modify your <b>Destiny characters</b>, <b>vault</b>, and <b>progression</b>.</p>
+      <a href="https://www.bungie.net/en/oauth/authorize?client_id=50681&response_type=code&state=hello_world">
+        <button class="btn btn-primary btn-block mt-2">Authorize with Bungie.net</button>
+      </a>
+    </div>
+  </div>
+</div>
