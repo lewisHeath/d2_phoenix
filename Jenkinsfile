@@ -14,7 +14,6 @@ pipeline {
                 sh 'echo WORKSPACE=$WORKSPACE'
                 sh 'echo HOME=$HOME'
                 sh 'echo MIX_HOME=$MIX_HOME'
-                sh 'whoami'
                 sh 'pwd'
                 sh 'echo "Building..."'
                 sh 'mix local.hex --force'
