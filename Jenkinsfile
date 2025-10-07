@@ -6,6 +6,8 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'echo "Building..."'
+                sh 'mix local.hex --force'
+                sh 'mix local.rebar --force'
                 sh 'mix deps.get'
                 sh 'mix compile'
             }
