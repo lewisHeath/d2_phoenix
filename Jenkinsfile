@@ -16,8 +16,6 @@ pipeline {
                 sh 'echo MIX_HOME=$MIX_HOME'
                 sh 'pwd'
                 sh 'echo "Building..."'
-                sh 'mix local.hex --force'
-                sh 'mix local.rebar --force'
                 sh 'mix deps.get'
                 sh 'mix compile'
             }
